@@ -1,6 +1,11 @@
+// ignore_for_file: library_private_types_in_public_api
+
+import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -10,57 +15,57 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      backgroundColor: Colors.redAccent,
-
+        backgroundColor: Colors.redAccent,
       ),
       body: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
-                SizedBox(width: 16.0),
-                Text(
+                const SizedBox(width: 16.0),
+                const Text(
                   'Login',
                   style: TextStyle(fontSize: 33.0),
                 ),
               ],
             ),
-            SizedBox(height: 32.0),
-            TextField(
+            const SizedBox(height: 32.0),
+            const TextField(
               decoration: InputDecoration(
                 hintText: 'e_mail',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16.0),
-            TextField(
+            const SizedBox(height: 16.0),
+            const TextField(
               obscureText: true,
               decoration: InputDecoration(
                 hintText: 'Senha',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 32.0),
+            const SizedBox(height: 32.0),
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent
-                ),//botão Login
+                    backgroundColor: Colors.redAccent), //botão Login
                 onPressed: () {
-                  // Implement login logic here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProductsScreen(),
+                    ),
+                  );
                 },
-                child: Center(child: Text('Login')
-                ),
-
-
+                child: const Center(child: Text('Login')),
               ),
             ),
           ],
