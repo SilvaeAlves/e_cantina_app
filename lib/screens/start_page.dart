@@ -51,7 +51,8 @@ class _StartpageState extends State<Startpage> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
+                  horizontal: 8.0,
+                  //alterado para 8 pois ja tem 8 de padding do padding que antecede ai fica no padrão 16 e não quebra em telas menores
                   vertical: 8.0,
                 ),
                 child: SizedBox(
