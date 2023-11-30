@@ -120,7 +120,17 @@ class CustomerModel {
           await firestore.collection("customers").doc(email).get();
       Map<String, dynamic> data =
           documentSnapshot.data() as Map<String, dynamic>;
-      return CustomerModel.fromMap(data);
+      if (data['password'] == password) {
+        return CustomerModel.fromMap(data);
+      } else {
+        return CustomerModel(
+            id: 0,
+            email: '',
+            password: '',
+            name: '',
+            socialName: '',
+            isAdm: false);
+      }
     } catch (e) {
       return CustomerModel(
           id: 0,

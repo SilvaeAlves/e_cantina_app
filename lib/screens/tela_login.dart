@@ -61,17 +61,13 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 32.0),
             Center(
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent), //botão Login
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                 onPressed: () {
-                  CustomerModel.getCustomerByEmailAndPassword(
-                          _emailController.text
-                              .trim(), //trim() remove os espaços em branco
-                          _passwordController.text.trim())
+                  login(_emailController.text, _passwordController.text)
                       .then((value) {
-                    if (value.id != 0) {
-                      Navigator.push(
-                        context,
+                    if (value) {
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => const ProductsScreen(),
                         ),
@@ -88,6 +84,16 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> login(String email, String password) async {
+    CustomerModel customer =
+        await CustomerModel.getCustomerByEmailAndPassword(email, password);
+    if (customer.id != 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   void _showErrorDialog(BuildContext context) {
