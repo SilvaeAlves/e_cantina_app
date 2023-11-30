@@ -1,22 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
-import 'package:e_cantina_app/models/order_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerModel {
   final int id;
   final String email;
   final String password;
   final String name;
-  final List<OrderModel> orders;
+  final String socialName;
+  final bool isAdm = false;
+
   CustomerModel({
     required this.id,
     required this.email,
     required this.password,
     required this.name,
-    required this.orders,
+    required this.socialName,
+    required bool isAdm,
   });
 
   CustomerModel copyWith({
@@ -24,14 +27,16 @@ class CustomerModel {
     String? email,
     String? password,
     String? name,
-    List<OrderModel>? orders,
+    String? socialName,
+    bool? isAdm,
   }) {
     return CustomerModel(
       id: id ?? this.id,
       email: email ?? this.email,
       password: password ?? this.password,
       name: name ?? this.name,
-      orders: orders ?? this.orders,
+      socialName: socialName ?? this.socialName,
+      isAdm: isAdm ?? this.isAdm,
     );
   }
 
@@ -41,7 +46,8 @@ class CustomerModel {
       'email': email,
       'password': password,
       'name': name,
-      'orders': orders.map((x) => x.toMap()).toList(),
+      'socialName': socialName,
+      'isAdm': isAdm,
     };
   }
 
@@ -51,11 +57,8 @@ class CustomerModel {
       email: map['email'] as String,
       password: map['password'] as String,
       name: map['name'] as String,
-      orders: List<OrderModel>.from(
-        (map['orders'] as List<int>).map<OrderModel>(
-          (x) => OrderModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      socialName: map['socialName'] as String,
+      isAdm: map['isAdm'] as bool,
     );
   }
 
@@ -66,7 +69,7 @@ class CustomerModel {
 
   @override
   String toString() {
-    return 'CustomerModel(id: $id, email: $email, password: $password, name: $name, orders: $orders)';
+    return 'CustomerModel(id: $id, email: $email, password: $password, name: $name, socialName: $socialName, isAdm: $isAdm)';
   }
 
   @override
@@ -77,7 +80,7 @@ class CustomerModel {
         other.email == email &&
         other.password == password &&
         other.name == name &&
-        listEquals(other.orders, orders);
+        other.socialName == socialName;
   }
 
   @override
@@ -86,6 +89,71 @@ class CustomerModel {
         email.hashCode ^
         password.hashCode ^
         name.hashCode ^
-        orders.hashCode;
+        socialName.hashCode;
+  }
+
+  Future<bool> saveCustomer() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    try {
+      await firestore.collection("customers").doc(email).set(toMap());
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> updateCustomer() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection("customers").doc(email).update(toMap());
+  }
+
+  Future<void> deleteCustomer() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore.collection("customers").doc(email).delete();
+  }
+
+  static Future<CustomerModel> getCustomerByEmailAndPassword(
+      String email, String password) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    try {
+      DocumentSnapshot documentSnapshot =
+          await firestore.collection("customers").doc(email).get();
+      Map<String, dynamic> data =
+          documentSnapshot.data() as Map<String, dynamic>;
+      return CustomerModel.fromMap(data);
+    } catch (e) {
+      return CustomerModel(
+          id: 0,
+          email: '',
+          password: '',
+          name: '',
+          socialName: '',
+          isAdm: false);
+    }
+  }
+
+  static int createId() {
+    return DateTime.now().millisecondsSinceEpoch;
+  }
+
+  static saveCustomerUserLocal(CustomerModel customer) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('customer', json.encode(customer.toMap()));
+  }
+
+  static Future<CustomerModel> getCustomerUserLocal() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? customer = prefs.getString('customer');
+    if (customer != null) {
+      return CustomerModel.fromMap(json.decode(customer));
+    } else {
+      return CustomerModel(
+          id: 0,
+          email: '',
+          password: '',
+          name: '',
+          socialName: '',
+          isAdm: false);
+    }
   }
 }

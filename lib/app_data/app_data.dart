@@ -160,4 +160,14 @@ class AppData extends ChangeNotifier {
         NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
     return currencyFormatter.format(value);
   }
+
+  createOrder() {
+    final order = OrderModel(
+      id: DateTime.now().millisecondsSinceEpoch,
+      idUser: 1,
+      idEstablishment: 1,
+      products: [],
+    );
+    return order;
+  }
 }

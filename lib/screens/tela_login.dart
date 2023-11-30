@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,16 +42,18 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             const SizedBox(height: 32.0),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
                 hintText: 'e_mail',
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16.0),
-            const TextField(
+            TextField(
+              controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Senha',
                 border: OutlineInputBorder(),
               ),
@@ -59,12 +64,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent), //botão Login
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProductsScreen(),
-                    ),
-                  );
+                  CustomerModel.getCustomerByEmailAndPassword(
+                          _emailController.text
+                              .trim(), //trim() remove os espaços em branco
+                          _passwordController.text.trim())
+                      .then((value) {
+                    if (value.id != 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProductsScreen(),
+                        ),
+                      );
+                    } else {
+                      _showErrorDialog(context);
+                    }
+                  });
                 },
                 child: const Center(child: Text('Login')),
               ),
@@ -72,6 +87,27 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Erro de Autenticação'),
+          content: const Text(
+              'E-mail ou senha incorretos. Por favor, tente novamente.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o diálogo
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,15 +1,13 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:e_cantina_app/app_data/app_data.dart';
-import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/screens/start_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase/firebase_config.dart';
-import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initFirebase();

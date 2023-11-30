@@ -1,4 +1,6 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
+import 'package:e_cantina_app/models/customer_model.dart';
+import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +45,24 @@ class _CartScrenState extends State<CartScren> {
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (appData.cart.isNotEmpty) {
+                    final order = appData.createOrder();
+                    for (var element in appData.cart) {
+                      appData.addProductToOrder(order, element);
+                    }
+
+                    CustomerModel.getCustomerUserLocal().then((value) {
+                      CustomerModel customer = value;
+                      if (customer.id != 0) {
+                        order.customer = customer;
+                        OrderModel.saveOrder(order);
+                        appData.clearCart();
+                        Navigator.pop(context);
+                      }
+                    });
+
+                    Navigator.pop(context);
+                  }
                 },
                 child: const Text('Pagar',
                     style: TextStyle(fontSize: 20.0, color: Colors.white)),

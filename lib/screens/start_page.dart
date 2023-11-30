@@ -63,7 +63,7 @@ class _StartpageState extends State<Startpage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RegisterScreen()));
+                                builder: (context) => const RegisterScreen()));
                       },
                       child: const Text('Cadastro')),
                 ),
