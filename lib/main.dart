@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
         home: AnimatedSplashScreen(
           duration: 2500,
           splash: Container(
-              color: AppConfig.appBarBackgroundColor,
-              child: Image.asset('assets/images/logo_e_Cantina.jpeg')),
+              color: Colors.transparent,
+              child: Image.asset('assets/images/ativo_4@300x.png')),
           nextScreen: const Startpage(),
           splashTransition: SplashTransition.fadeTransition,
           pageTransitionType: PageTransitionType.fade,

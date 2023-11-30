@@ -23,7 +23,7 @@ class _StartpageState extends State<Startpage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
                     50.0), // Ajuste o valor conforme necessário
-                child: Image.asset('assets/images/logo_login.png'),
+                child: Image.asset('assets/images/ativo_6@300x.png'),
               )),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

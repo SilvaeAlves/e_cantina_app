@@ -11,7 +11,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro'),
+        backgroundColor: Colors.redAccent,
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -65,10 +66,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
             const SizedBox(height: 32.0),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent),
               onPressed: () {
                 // Implement registration logic here
               },
-              child: const Text('Salvar'),
+              child: const Center(child: Text('Salvar')),
             ),
           ],
         ),

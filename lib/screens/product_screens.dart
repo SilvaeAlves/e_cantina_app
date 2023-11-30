@@ -18,6 +18,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Produtos'),
+        backgroundColor: Colors.redAccent,
         actions: [
           Consumer(builder: (context, AppData appData, child) {
             if (appData.cart.isNotEmpty) {
