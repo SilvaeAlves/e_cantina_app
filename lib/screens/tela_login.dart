@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:e_cantina_app/models/customer_model.dart';
+import 'package:e_cantina_app/screens/home_screen.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:flutter/material.dart';
 
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (value) {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const ProductsScreen(),
+                          builder: (context) => const HomeScreen(),
                         ),
                       );
                     } else {
@@ -90,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
     CustomerModel customer =
         await CustomerModel.getCustomerByEmailAndPassword(email, password);
     if (customer.id != 0) {
+      CustomerModel.saveCustomerUserLocal(customer);
       return true;
     } else {
       return false;

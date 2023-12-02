@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,7 @@ class AppData extends ChangeNotifier {
   }
 
   void clearCart() {
+    cart = [];
     cart.clear();
     notifyListeners();
   }
@@ -162,12 +164,24 @@ class AppData extends ChangeNotifier {
   }
 
   createOrder() {
-    final order = OrderModel(
+    OrderModel order = OrderModel(
       id: DateTime.now().millisecondsSinceEpoch,
       idUser: 1,
       idEstablishment: 1,
       products: [],
     );
     return order;
+  }
+
+  void getOrdersByIdUser() async {
+    CustomerModel customer = await CustomerModel.getCustomerUserLocal();
+    int idUser = customer.id;
+    orders = await OrderModel.getOrdersByIdUser(idUser);
+    notifyListeners();
+  }
+
+  void getOrderByIdEstablishment(int idEstablishment) async {
+    orders = await OrderModel.getOrdersByIdStablishment(idEstablishment);
+    notifyListeners();
   }
 }

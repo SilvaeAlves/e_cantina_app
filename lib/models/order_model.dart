@@ -10,6 +10,7 @@ class OrderModel {
   int id;
   int idUser;
   int idEstablishment;
+  double total = 0.0;
   List<ProductModel> products;
 
   OrderModel({
@@ -17,10 +18,8 @@ class OrderModel {
     required this.products,
     this.idUser = 0,
     this.idEstablishment = 0,
+    this.total = 0.0,
   });
-
-  double get total =>
-      products.fold(0, (total, current) => total + current.price);
 
   OrderModel copyWith({
     List<ProductModel>? products,
@@ -30,6 +29,7 @@ class OrderModel {
       idUser: idUser,
       idEstablishment: idEstablishment,
       products: products ?? this.products,
+      total: total,
     );
   }
 
@@ -39,6 +39,7 @@ class OrderModel {
       'idUser': idUser,
       'idEstablishment': idEstablishment,
       'products': products.map((x) => x.toMap()).toList(),
+      'total': total,
     };
   }
 
@@ -47,8 +48,9 @@ class OrderModel {
       id: map['id'] as int,
       idUser: map['idUser'] as int,
       idEstablishment: map['idEstablishment'] as int,
+      total: map['total'] as double,
       products: List<ProductModel>.from(
-        (map['products'] as List<int>).map<ProductModel>(
+        (map['products'] as List<dynamic>).map<ProductModel>(
           (x) => ProductModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -63,7 +65,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, idUser: $idUser, idEstablishment: $idEstablishment, products: $products)';
+    return 'OrderModel(id: $id, idUser: $idUser, idEstablishment: $idEstablishment, products: $products, total: $total)';
   }
 
   @override
@@ -84,6 +86,10 @@ class OrderModel {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference orders = firestore.collection('orders');
 
+    for (var element in order.products) {
+      order.total += element.price * element.quantity;
+    }
+
     try {
       await orders.add(order.toMap());
       return true;
@@ -92,7 +98,7 @@ class OrderModel {
     }
   }
 
-  Future<List<OrderModel>> getOrdersByIdStablishment(int id) async {
+  static Future<List<OrderModel>> getOrdersByIdStablishment(int id) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference orders = firestore.collection('orders');
 
@@ -105,6 +111,36 @@ class OrderModel {
       return ordersList;
     } catch (e) {
       return [];
+    }
+  }
+
+  static Future<List<OrderModel>> getOrdersByIdUser(int idUser) async {
+    CollectionReference igrejasCollection =
+        FirebaseFirestore.instance.collection('orders');
+    QuerySnapshot querySnapshot = await igrejasCollection.get();
+
+    List<OrderModel> orderlist = [];
+    for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
+      Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+      OrderModel order = OrderModel.fromMap(data);
+      if (order.idUser == idUser) {
+        orderlist.add(order);
+      }
+    }
+    return orderlist;
+  }
+
+  static Future<OrderModel?> getOrderById(int id) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference orders = firestore.collection('orders');
+
+    try {
+      DocumentSnapshot documentSnapshot = await orders.doc(id.toString()).get();
+      Map<String, dynamic> data =
+          documentSnapshot.data() as Map<String, dynamic>;
+      return OrderModel.fromMap(data);
+    } catch (e) {
+      return null;
     }
   }
 
