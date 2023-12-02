@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/screens/extract_dindin.dart';
 import 'package:e_cantina_app/screens/orders_user_screen.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:e_cantina_app/screens/tela_login.dart';
@@ -95,7 +96,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const ExtractDindin();
+                  }));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Card(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            'assets/images/dindin.webp',
+                            fit: BoxFit.cover,
+                            width: 150,
+                            height: 150,
+                          ),
+                        ),
+                        const Text('Extrato Dindin'),
+                      ],
+                    ),
+                  ),
+                ),
               )
-            ])));
+            ]
+            )
+        )
+    );
   }
 }

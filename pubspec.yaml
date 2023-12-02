@@ -94,6 +94,8 @@ flutter:
      - assets/images/ativo_6@300x.png
      - assets/images/produtos.jpeg
      - assets/images/pedidos.jpeg
+     - assets/images/dindin.webp
+
        # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

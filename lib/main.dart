@@ -1,8 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:e_cantina_app/app_data/app_data.dart';
-import 'package:e_cantina_app/screens/home_screen.dart';
 import 'package:e_cantina_app/screens/start_page.dart';
-import 'package:e_cantina_app/screens/tela_login.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
@@ -30,13 +29,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
           useMaterial3: true,
         ),
         home: AnimatedSplashScreen(
-          duration: 2500,
+          duration: 5000,
           splash: Container(
               color: Colors.transparent,
               child: Image.asset('assets/images/ativo_4@300x.png')),
