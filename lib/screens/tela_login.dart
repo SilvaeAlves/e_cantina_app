@@ -2,7 +2,6 @@
 
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/screens/home_screen.dart';
-import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {

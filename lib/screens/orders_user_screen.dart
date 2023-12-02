@@ -1,5 +1,4 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
-import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
