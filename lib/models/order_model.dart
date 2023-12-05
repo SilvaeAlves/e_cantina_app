@@ -9,6 +9,8 @@ import 'package:e_cantina_app/models/product_model.dart';
 class OrderModel {
   int id;
   int idUser;
+  String nameUser;
+  bool isPago;
   int idEstablishment;
   double total = 0.0;
   List<ProductModel> products;
@@ -17,6 +19,8 @@ class OrderModel {
     this.id = 0,
     required this.products,
     this.idUser = 0,
+    this.nameUser = '',
+    this.isPago = false,
     this.idEstablishment = 0,
     this.total = 0.0,
   });
@@ -27,6 +31,8 @@ class OrderModel {
     return OrderModel(
       id: id,
       idUser: idUser,
+      nameUser: nameUser,
+      isPago: isPago,
       idEstablishment: idEstablishment,
       products: products ?? this.products,
       total: total,
@@ -37,6 +43,8 @@ class OrderModel {
     return <String, dynamic>{
       'id': id,
       'idUser': idUser,
+      'nameUser': nameUser,
+      'isPago': isPago,
       'idEstablishment': idEstablishment,
       'products': products.map((x) => x.toMap()).toList(),
       'total': total,
@@ -47,6 +55,8 @@ class OrderModel {
     return OrderModel(
       id: map['id'] as int,
       idUser: map['idUser'] as int,
+      nameUser: map['nameUser'] as String,
+      isPago: map['isPago'] as bool,
       idEstablishment: map['idEstablishment'] as int,
       total: map['total'] as double,
       products: List<ProductModel>.from(
@@ -65,7 +75,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, idUser: $idUser, idEstablishment: $idEstablishment, products: $products, total: $total)';
+    return 'OrderModel(id: $id, idUser: $idUser, nameUser: $nameUser, isPago: $isPago, idEstablishment: $idEstablishment, products: $products, total: $total)';
   }
 
   @override
@@ -84,14 +94,17 @@ class OrderModel {
 
   static Future<bool> saveOrder(OrderModel order) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference orders = firestore.collection('orders');
 
     for (var element in order.products) {
       order.total += element.price * element.quantity;
     }
 
     try {
-      await orders.add(order.toMap());
+      await firestore
+          .collection('orders')
+          .doc(order.id.toString())
+          .set(order.toMap());
+
       return true;
     } catch (e) {
       return false;
@@ -156,12 +169,15 @@ class OrderModel {
     }
   }
 
-  Future<bool> updateOrder(OrderModel order) async {
+  static Future<bool> updateOrder(OrderModel order) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference orders = firestore.collection('orders');
 
     try {
-      await orders.doc(order.id.toString()).update(order.toMap());
+      await firestore
+          .collection('orders')
+          .doc(order.id.toString())
+          .set(order.toMap());
+
       return true;
     } catch (e) {
       return false;

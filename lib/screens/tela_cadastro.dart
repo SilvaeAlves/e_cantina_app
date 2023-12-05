@@ -1,8 +1,6 @@
 import 'package:e_cantina_app/models/customer_model.dart';
-import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:e_cantina_app/screens/tela_login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -111,8 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(height: 32.0),
               ElevatedButton(
-                style:
-                ElevatedButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
                     backgroundColor: Colors.redAccent),
                 onPressed: () {

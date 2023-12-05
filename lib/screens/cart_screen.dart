@@ -2,6 +2,7 @@ import 'package:e_cantina_app/app_data/app_data.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
+import 'package:e_cantina_app/screens/credicard_screen.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -64,6 +65,8 @@ class _CartScrenState extends State<CartScren> {
 
                     if (customer.id != 0) {
                       order.idUser = customer.id;
+                      order.nameUser = customer.name;
+                      order.isPago = false;
 
                       OrderModel.saveOrder(order);
                       appData.clearQuantity();
@@ -71,7 +74,9 @@ class _CartScrenState extends State<CartScren> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProductsScreen()));
+                              builder: (context) => CredicardScreen(
+                                    order: order,
+                                  )));
                     }
                   }
                 },

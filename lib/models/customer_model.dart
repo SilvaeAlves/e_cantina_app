@@ -11,7 +11,7 @@ class CustomerModel {
   final String password;
   final String name;
   final String socialName;
-  final bool isAdm = false;
+  final bool isAdm;
 
   CustomerModel({
     required this.id,
@@ -19,7 +19,7 @@ class CustomerModel {
     required this.password,
     required this.name,
     required this.socialName,
-    required bool isAdm,
+    required this.isAdm,
   });
 
   CustomerModel copyWith({

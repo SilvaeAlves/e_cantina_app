@@ -1,24 +1,23 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
 import 'package:e_cantina_app/models/order_model.dart';
-import 'package:e_cantina_app/screens/credicard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class OrderUserScreen extends StatefulWidget {
-  const OrderUserScreen({super.key});
+class OrderUserScreenAdm extends StatefulWidget {
+  const OrderUserScreenAdm({super.key});
 
   @override
-  State<OrderUserScreen> createState() => _OrderUserScreenState();
+  State<OrderUserScreenAdm> createState() => _OrderUserScreenAdmState();
 }
 
-class _OrderUserScreenState extends State<OrderUserScreen> {
+class _OrderUserScreenAdmState extends State<OrderUserScreenAdm> {
   List<OrderModel> orders = [];
 
   @override
   void initState() {
     super.initState();
     final appData = Provider.of<AppData>(context, listen: false);
-    appData.getOrdersByIdUser();
+    appData.getOrderByIdEstablishment(1);
   }
 
   @override
@@ -41,35 +40,22 @@ class _OrderUserScreenState extends State<OrderUserScreen> {
                   return Expanded(
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            if (appData.orders[index].isPago == false) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CredicardScreen(
-                                            order: appData.orders[index],
-                                          )));
-                            }
-                          },
-                          child: Card(
-                            color: appData.orders[index].isPago == false
-                                ? Colors.redAccent
-                                : Colors.greenAccent,
-                            child: ListTile(
-                              title: Text(
-                                  'Pedido ${appData.orders[index].id.toString()}'),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(appData.orders[index].idUser.toString()),
-                                  Text(appData.orders[index].nameUser
-                                      .toString()),
-                                ],
-                              ),
-                              trailing: Text(
-                                  'Total: R\$${appData.orders[index].total.toStringAsFixed(2)}'),
+                        Card(
+                          color: appData.orders[index].isPago == false
+                              ? Colors.redAccent
+                              : Colors.greenAccent,
+                          child: ListTile(
+                            title: Text(
+                                'Pedido ${appData.orders[index].id.toString()}'),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(appData.orders[index].idUser.toString()),
+                                Text(appData.orders[index].nameUser.toString()),
+                              ],
                             ),
+                            trailing: Text(
+                                'Total: R\$${appData.orders[index].total.toStringAsFixed(2)}'),
                           ),
                         ),
                         for (var element in appData.orders[index].products)

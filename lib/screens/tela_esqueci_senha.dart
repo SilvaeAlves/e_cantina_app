@@ -1,7 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class HomeForgetPassword extends StatefulWidget {
   const HomeForgetPassword({super.key});
@@ -51,11 +50,9 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
             const SizedBox(height: 32.0),
             Center(
               child: ElevatedButton(
-                  style:
-                  ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      backgroundColor: Colors.redAccent
-                      ),
+                      backgroundColor: Colors.redAccent),
                   onPressed: () {
                     /*login(_emailController.text)
                         .then((value) {
@@ -70,10 +67,7 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
                       }
                     });*/
                   },
-                  child: const Center(child: Text('Redefinir Senha'))
-
-
-              ),
+                  child: const Center(child: Text('Redefinir Senha'))),
             ),
           ],
         ),
@@ -82,10 +76,11 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
   }
 
 //talvez criar um função texto para ser usada como recuperar senha
-  void forgetPassword(BuildContext context){
+  void forgetPassword(BuildContext context) {
     const Padding(
       padding: EdgeInsets.symmetric(),
-      child: Row (mainAxisAlignment: MainAxisAlignment.end,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text('Esqueceu a senha?'),
         ],

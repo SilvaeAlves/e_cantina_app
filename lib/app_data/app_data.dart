@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/models/credicard_model.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
@@ -90,6 +91,24 @@ class AppData extends ChangeNotifier {
 
   List<ProductModel> cart = [];
 
+  CustomerModel customer = CustomerModel(
+    id: 0,
+    name: '',
+    email: '',
+    password: '',
+    socialName: '',
+    isAdm: false,
+  );
+
+  List<OrderModel> orders = [];
+
+  CredicardModel credicard = CredicardModel(
+    cardCVV: '',
+    cardNumber: '',
+    cardHolderName: '',
+    cardExpirationDate: '',
+  );
+
   void addToCart(ProductModel product) {
     product.quantity++;
     notifyListeners();
@@ -119,8 +138,6 @@ class AppData extends ChangeNotifier {
 
   double get cartTotal =>
       cart.fold(0, (total, current) => total + current.price);
-
-  List<OrderModel> orders = [];
 
   void addOrder(OrderModel order) {
     orders.add(order);
@@ -182,6 +199,40 @@ class AppData extends ChangeNotifier {
 
   void getOrderByIdEstablishment(int idEstablishment) async {
     orders = await OrderModel.getOrdersByIdStablishment(idEstablishment);
+    notifyListeners();
+  }
+
+  Future<void> login(String email, String password) async {
+    try {
+      CustomerModel customer =
+          await CustomerModel.getCustomerByEmailAndPassword(email, password);
+      if (customer.id != 0) {
+        this.customer = customer;
+        notifyListeners();
+      } else {
+        this.customer = CustomerModel(
+            id: 0,
+            email: '',
+            password: '',
+            name: '',
+            socialName: '',
+            isAdm: false);
+        notifyListeners();
+      }
+    } catch (e) {
+      customer = CustomerModel(
+          id: 0,
+          email: '',
+          password: '',
+          name: '',
+          socialName: '',
+          isAdm: false);
+      notifyListeners();
+    }
+  }
+
+  addtoCredicard(CredicardModel credicard) {
+    this.credicard = credicard;
     notifyListeners();
   }
 }
