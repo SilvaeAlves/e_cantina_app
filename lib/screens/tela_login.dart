@@ -2,6 +2,7 @@
 
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/screens/home_screen.dart';
+import 'package:e_cantina_app/screens/tela_esqueci_senha.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -59,11 +60,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 32.0),
+            const SizedBox(height: 16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.black),
+                  onPressed:(){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeForgetPassword(),
+                      ),
+                    );
+                  },
+                  child: const Text('Esqueceu a senha? Clique aqui!'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16.0),
             Center(
               child: ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                  style:
+                  ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.redAccent),
                 onPressed: () {
                   login(_emailController.text, _passwordController.text)
                       .then((value) {
@@ -78,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   });
                 },
-                child: const Center(child: Text('Login')),
+                child: const Center(child: Text('Login'))
+
               ),
             ),
           ],
@@ -86,6 +108,19 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+
+  void forgetPassword(BuildContext context){
+    const Padding(
+        padding: EdgeInsets.symmetric(),
+        child: Row (mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text('Esqueceu a senha?'),
+          ],
+        ),
+    );
+  }
+
 
   Future<bool> login(String email, String password) async {
     CustomerModel customer =

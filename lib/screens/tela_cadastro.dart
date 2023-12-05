@@ -112,7 +112,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 32.0),
               ElevatedButton(
                 style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.redAccent),
                 onPressed: () {
                   if (_confirmPasswordController.text !=
                       _passwordController.text) {
