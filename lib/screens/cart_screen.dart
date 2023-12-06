@@ -1,11 +1,18 @@
+import 'dart:math';
+
 import 'package:e_cantina_app/app_data/app_data.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
+import 'package:e_cantina_app/pages/confirmacao_compra/confimacao_compra_widget.dart';
 import 'package:e_cantina_app/screens/credicard_screen.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 
 class CartScren extends StatefulWidget {
   const CartScren({super.key});
@@ -18,7 +25,7 @@ class _CartScrenState extends State<CartScren> {
   bool isPix = false;
   bool isDinDin = false;
   var total = 0.0;
-
+  Random random = Random();
   late CustomerModel customer;
 
   void setTotal(List<ProductModel> products) {
@@ -43,6 +50,7 @@ class _CartScrenState extends State<CartScren> {
   @override
   Widget build(BuildContext context) {
     final appData = Provider.of<AppData>(context);
+    List<ProductModel> listaPordutos = appData.cart;
     setTotal(appData.cart);
     return Scaffold(
       bottomNavigationBar: SizedBox(
@@ -57,28 +65,34 @@ class _CartScrenState extends State<CartScren> {
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                 onPressed: () async {
-                  if (appData.cart.isNotEmpty) {
-                    OrderModel order = appData.createOrder();
-                    for (var element in appData.cart) {
-                      appData.addProductToOrder(order, element);
-                    }
-
-                    if (customer.id != 0) {
-                      order.idUser = customer.id;
-                      order.nameUser = customer.name;
-                      order.isPago = false;
-
-                      OrderModel.saveOrder(order);
-                      appData.clearQuantity();
-                      appData.clearCart();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CredicardScreen(
-                                    order: order,
-                                  )));
-                    }
-                  }
+                  // if (appData.cart.isNotEmpty) {
+                  //   OrderModel order = appData.createOrder();
+                  //   for (var element in appData.cart) {
+                  //     appData.addProductToOrder(order, element);
+                  //   }
+                  //
+                  //   if (customer.id != 0) {
+                  //     order.idUser = customer.id;
+                  //     order.nameUser = customer.name;
+                  //     order.isPago = false;
+                  //
+                  //     OrderModel.saveOrder(order);
+                  //     appData.clearQuantity();
+                  //     appData.clearCart();
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => CredicardScreen(
+                  //                   order: order,
+                  //                 )));
+                  //   }
+                  // }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>  ConfirmacaoCompraWidget(listaPedido: listaPordutos,horapedido: obterHoraAtualMais15Minutos(),numeroPedido: random.nextInt(101).toString()),
+                    ),
+                  );
                 },
                 child: const Text('Pagar',
                     style: TextStyle(fontSize: 20.0, color: Colors.white)),
@@ -216,5 +230,18 @@ class _CartScrenState extends State<CartScren> {
         ),
       )),
     );
+  }
+
+  String obterHoraAtualMais15Minutos() {
+    // Obtém a hora atual
+    DateTime agora = DateTime.now();
+
+    // Adiciona 15 minutos
+    DateTime horaMais15Minutos = agora.add(Duration(minutes: 15));
+
+    // Formata a hora como uma string no formato "HH:mm"
+    String horaFormatada = DateFormat('HH:mm').format(horaMais15Minutos);
+
+    return horaFormatada;
   }
 }
