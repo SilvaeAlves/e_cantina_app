@@ -1,4 +1,5 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/models/credicard_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
@@ -48,8 +49,12 @@ class _CredicardScreenState extends State<CredicardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cartão de Crédito'),
-        backgroundColor: Colors.redAccent,
+        title: const Text(
+          'Cartão de Crédito',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
           child: Form(

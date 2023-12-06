@@ -22,8 +22,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
     final appData = Provider.of<AppData>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Produtos'),
-        backgroundColor: Colors.redAccent,
+        title: const Text(
+          'Produtos',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
         actions: [
           Consumer(builder: (context, AppData appData, child) {
             if (appData.cart.isNotEmpty) {
@@ -32,10 +36,16 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 child: GestureDetector(
                   child: Row(
                     children: [
-                      const Icon(Icons.shopping_cart),
+                      const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.white,
+                      ),
                       Text(
                         appData.cart.length.toString(),
-                        style: const TextStyle(fontSize: 20.0),
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),

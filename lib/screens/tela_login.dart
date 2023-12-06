@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:e_cantina_app/app_data/app_data.dart';
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/screens/home_screen.dart';
 import 'package:e_cantina_app/screens/home_screen_adm.dart';
@@ -32,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
         automaticallyImplyLeading: false,
       ),
       body: Container(

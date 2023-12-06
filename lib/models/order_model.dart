@@ -10,9 +10,14 @@ class OrderModel {
   int id;
   int idUser;
   String nameUser;
+  int numberOrder;
   bool isPago;
   int idEstablishment;
   double total = 0.0;
+  String status;
+  String paymentMethod;
+  bool iscancel;
+  String cancelReason = '';
   List<ProductModel> products;
 
   OrderModel({
@@ -20,23 +25,32 @@ class OrderModel {
     required this.products,
     this.idUser = 0,
     this.nameUser = '',
+    this.numberOrder = 0,
     this.isPago = false,
     this.idEstablishment = 0,
     this.total = 0.0,
+    this.status = 'Pendente',
+    this.paymentMethod = 'Pix',
+    this.iscancel = false,
+    this.cancelReason = '',
   });
 
   OrderModel copyWith({
     List<ProductModel>? products,
   }) {
     return OrderModel(
-      id: id,
-      idUser: idUser,
-      nameUser: nameUser,
-      isPago: isPago,
-      idEstablishment: idEstablishment,
-      products: products ?? this.products,
-      total: total,
-    );
+        id: id,
+        idUser: idUser,
+        nameUser: nameUser,
+        numberOrder: numberOrder,
+        isPago: isPago,
+        idEstablishment: idEstablishment,
+        products: products ?? this.products,
+        total: total,
+        status: status,
+        paymentMethod: paymentMethod,
+        iscancel: iscancel,
+        cancelReason: cancelReason);
   }
 
   Map<String, dynamic> toMap() {
@@ -44,10 +58,15 @@ class OrderModel {
       'id': id,
       'idUser': idUser,
       'nameUser': nameUser,
+      'numberOrder': numberOrder,
       'isPago': isPago,
       'idEstablishment': idEstablishment,
       'products': products.map((x) => x.toMap()).toList(),
       'total': total,
+      'status': status,
+      'paymentMethod': paymentMethod,
+      'iscancel': iscancel,
+      'cancelReason': cancelReason,
     };
   }
 
@@ -56,9 +75,14 @@ class OrderModel {
       id: map['id'] as int,
       idUser: map['idUser'] as int,
       nameUser: map['nameUser'] as String,
+      numberOrder: map['numberOrder'] as int,
       isPago: map['isPago'] as bool,
       idEstablishment: map['idEstablishment'] as int,
       total: map['total'] as double,
+      status: map['status'] as String,
+      paymentMethod: map['paymentMethod'] as String,
+      iscancel: map['iscancel'] as bool,
+      cancelReason: map['cancelReason'] as String,
       products: List<ProductModel>.from(
         (map['products'] as List<dynamic>).map<ProductModel>(
           (x) => ProductModel.fromMap(x as Map<String, dynamic>),
@@ -75,7 +99,7 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, idUser: $idUser, nameUser: $nameUser, isPago: $isPago, idEstablishment: $idEstablishment, products: $products, total: $total)';
+    return 'OrderModel(id: $id, idUser: $idUser, nameUser: $nameUser, isPago: $isPago, idEstablishment: $idEstablishment, products: $products, total: $total, status: $status, paymentMethod: $paymentMethod)';
   }
 
   @override

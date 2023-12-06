@@ -1,9 +1,10 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
-import 'package:e_cantina_app/screens/credicard_screen.dart';
-import 'package:e_cantina_app/screens/product_screens.dart';
+import 'package:e_cantina_app/screens/confirm_order_user.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,26 +58,37 @@ class _CartScrenState extends State<CartScren> {
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
                 onPressed: () async {
-                  if (appData.cart.isNotEmpty) {
-                    OrderModel order = appData.createOrder();
-                    for (var element in appData.cart) {
-                      appData.addProductToOrder(order, element);
-                    }
+                  if (isDinDin == false && isPix == false) {
+                    selectPaymentMethod(context);
+                  } else {
+                    if (appData.cart.isNotEmpty) {
+                      OrderModel order = appData.createOrder();
 
-                    if (customer.id != 0) {
-                      order.idUser = customer.id;
-                      order.nameUser = customer.name;
-                      order.isPago = false;
+                      for (var element in appData.cart) {
+                        appData.addProductToOrder(order, element);
+                      }
+                      if (isDinDin) {
+                        order.paymentMethod = 'DinDin';
+                      }
+                      if (isPix) {
+                        order.paymentMethod = 'Pix';
+                      }
 
-                      OrderModel.saveOrder(order);
-                      appData.clearQuantity();
-                      appData.clearCart();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CredicardScreen(
-                                    order: order,
-                                  )));
+                      if (customer.id != 0) {
+                        order.idUser = customer.id;
+                        order.nameUser = customer.name;
+                        order.isPago = true;
+                        order.status = 'Pago';
+
+                        OrderModel.saveOrder(order);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ConfirmOrderUser(
+                                      order: order,
+                                    )));
+                      }
                     }
                   }
                 },
@@ -88,7 +100,12 @@ class _CartScrenState extends State<CartScren> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Carrinho'),
+        title: const Text(
+          'Carrinho',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
           child: Padding(
@@ -178,23 +195,29 @@ class _CartScrenState extends State<CartScren> {
                         ),
                         CheckboxListTile(
                           title: const Text('Pix'),
-                          value:
-                              false, // Defina o valor de acordo com a seleção do usuário
-                          onChanged: (isPix) {
+                          activeColor: Colors.green,
+                          checkColor: Colors.white,
+                          value: isPix,
+                          onChanged: (newValue) {
                             setState(() {
-                              isPix = !isPix!;
-                              isDinDin = false;
+                              isPix = newValue ?? false;
+                              if (isPix) {
+                                isDinDin = false;
+                              }
                             });
                           },
                         ),
                         CheckboxListTile(
                           title: const Text('DinDin'),
-                          value:
-                              false, // Defina o valor de acordo com a seleção do usuário
-                          onChanged: (isDinDin) {
+                          activeColor: Colors.green,
+                          checkColor: Colors.white,
+                          value: isDinDin,
+                          onChanged: (newValue) {
                             setState(() {
-                              isDinDin = !isDinDin!;
-                              isPix = false;
+                              isDinDin = newValue ?? false;
+                              if (isDinDin) {
+                                isPix = false;
+                              }
                             });
                           },
                         ),
@@ -215,6 +238,26 @@ class _CartScrenState extends State<CartScren> {
           ),
         ),
       )),
+    );
+  }
+
+  void selectPaymentMethod(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Selecionar forma de pagamento'),
+          content: const Text('Selecione um método de pagamento.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Fecha o diálogo
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

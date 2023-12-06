@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailsScreen extends StatefulWidget {
@@ -17,7 +18,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Details'),
+        title: const Text(
+          'User Details',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),

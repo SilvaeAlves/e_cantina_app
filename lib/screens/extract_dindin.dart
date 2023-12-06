@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:e_cantina_app/app_data/app_data.dart';
 import 'package:e_cantina_app/models/order_model.dart';
@@ -26,8 +27,12 @@ class _OrderUserScreenState extends State<ExtractDindin> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
-          title: const Text('Extrato Dindin'),
+          title: const Text(
+            'Extrato Dindin',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppConfig.backgroundColor,
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -41,20 +46,21 @@ class _OrderUserScreenState extends State<ExtractDindin> {
                     child: Column(
                       children: [
                         Column(
-                          children: [Column(
-
+                          children: [
+                            Column(
                               children: [
                                 Card(
                                   child: ListTile(
                                     title: Text(
                                         'Extrato do Pedido: ${appData.orders[index].id.toString()}'),
-                                    subtitle:
-                                    Text(appData.orders[index].idUser.toString()),
-                                    trailing:
-                                    Text(appData.orders[index].total.toString()),
+                                    subtitle: Text(appData.orders[index].idUser
+                                        .toString()),
+                                    trailing: Text(
+                                        appData.orders[index].total.toString()),
                                   ),
                                 ),
-                                for (var element in appData.orders[index].products)
+                                for (var element
+                                    in appData.orders[index].products)
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
@@ -62,29 +68,29 @@ class _OrderUserScreenState extends State<ExtractDindin> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 25, vertical: 5),
                                         child: SizedBox(
-                                            width: 120, child: Text(element.name)),
+                                            width: 120,
+                                            child: Text(element.name)),
                                       ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.symmetric(horizontal: 25),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 25),
                                         child: Text(
                                             'Quantidade: ${element.quantity.toString()}'),
                                       ),
                                       Padding(
-                                        padding:
-                                        const EdgeInsets.symmetric(horizontal: 25),
-                                        child:
-                                        Text(AppData.formatCurrency(element.price)),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 25),
+                                        child: Text(AppData.formatCurrency(
+                                            element.price)),
                                       ),
                                     ],
                                   ),
                                 ElevatedButton(
-                                  style:
-                                  ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                                  onPressed: () {
-
-                                  },
-                                  child: const Center(child: Text('CANCELAR COMPRA')),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.redAccent),
+                                  onPressed: () {},
+                                  child: const Center(
+                                      child: Text('CANCELAR COMPRA')),
                                 ),
                                 const Divider(
                                   color: Colors.black26,
@@ -102,8 +108,6 @@ class _OrderUserScreenState extends State<ExtractDindin> {
               ),
             ],
           ),
-        )
-    );
+        ));
   }
 }
-
