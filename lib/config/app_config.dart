@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class AppConfig {
   static Color backgroundColor = const Color(0xFFC72020);

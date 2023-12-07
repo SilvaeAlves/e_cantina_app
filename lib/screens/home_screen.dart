@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/screens/extract_dindin.dart';
 import 'package:e_cantina_app/screens/orders_user_screen.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
@@ -16,13 +17,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
-          title: const Text('Home'),
+          title: const Text(
+            'Home',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppConfig.backgroundColor,
+          centerTitle: true,
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: IconButton(
-                icon: const Icon(Icons.exit_to_app),
+                icon: const Icon(
+                  Icons.exit_to_app,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const LoginScreen();
@@ -125,9 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               )
-            ]
-            )
-        )
-    );
+            ])));
   }
 }

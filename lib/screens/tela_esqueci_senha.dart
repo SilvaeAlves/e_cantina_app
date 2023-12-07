@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:flutter/material.dart';
 
 class HomeForgetPassword extends StatefulWidget {
@@ -16,7 +17,8 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
         automaticallyImplyLeading: false,
       ),
       body: Container(

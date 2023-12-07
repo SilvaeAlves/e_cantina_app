@@ -1,3 +1,4 @@
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/screens/tela_login.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppConfig.backgroundColor,
+        centerTitle: true,
         automaticallyImplyLeading: false,
       ),
       body: Container(

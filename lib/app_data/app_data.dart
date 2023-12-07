@@ -2,6 +2,7 @@ import 'package:e_cantina_app/models/credicard_model.dart';
 import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
+import 'package:e_cantina_app/util/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -185,6 +186,15 @@ class AppData extends ChangeNotifier {
       id: DateTime.now().millisecondsSinceEpoch,
       idUser: 1,
       idEstablishment: 1,
+      nameUser: '',
+      numberOrder:
+          Utils.transformTo6Digits(DateTime.now().millisecondsSinceEpoch),
+      isPago: false,
+      total: 0.0,
+      status: 'Aguardando Pagamento',
+      paymentMethod: '',
+      iscancel: false,
+      cancelReason: '',
       products: [],
     );
     return order;

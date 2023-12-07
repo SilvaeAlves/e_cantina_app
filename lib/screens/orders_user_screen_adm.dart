@@ -1,4 +1,5 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +27,12 @@ class _OrderUserScreenAdmState extends State<OrderUserScreenAdm> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
-          title: const Text('Pedidos'),
+          title: const Text(
+            'Pedidos',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppConfig.backgroundColor,
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Column(

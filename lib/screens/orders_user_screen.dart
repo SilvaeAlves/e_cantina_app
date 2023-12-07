@@ -1,4 +1,5 @@
 import 'package:e_cantina_app/app_data/app_data.dart';
+import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/screens/credicard_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,12 @@ class _OrderUserScreenState extends State<OrderUserScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.redAccent,
-          title: const Text('Pedidos'),
+          title: const Text(
+            'Pedidos',
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: AppConfig.backgroundColor,
+          centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Column(
