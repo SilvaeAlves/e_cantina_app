@@ -40,7 +40,7 @@ class _OrderUserScreenState extends State<ExtractDindin> {
           child: Column(
             children: [
               Text(
-                'Caixa: R\$ ${appData.caixa.toString()}',
+                'Movimento Finaceiro: R\$ ${appData.caixa.toString()}',
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),

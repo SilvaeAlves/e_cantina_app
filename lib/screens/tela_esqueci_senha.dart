@@ -56,21 +56,12 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
                   style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.redAccent),
-                  onPressed: () {
-                    /*login(_emailController.text)
-                        .then((value) {
-                      if (value) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
-                      } else {
-                        _showErrorDialog(context);
-                      }
-                    });*/
-
-                    resetPassword(_emailController.text);
+                  onPressed: () async {
+                    try {
+                      await resetPassword(_emailController.text);
+                    } catch (e) {
+                      _showErrorDialog(context); // Use o contexto passado no parâmetro
+                    }
                   },
                   child: const Center(child: Text('Redefinir Senha'))),
             ),
@@ -80,31 +71,7 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
     );
   }
 
-//talvez criar um função texto para ser usada como recuperar senha
-  void forgetPassword(BuildContext context) {
-    const Padding(
-      padding: EdgeInsets.symmetric(),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text('Esqueceu a senha?'),
-        ],
-      ),
-    );
-  }
 
-/*
-  Future<bool> login(String email) async {
-    CustomerModel customer =
-    await CustomerModel.getCustomerByEmailAndPassword(email);
-    if (customer.id != 0) {
-      CustomerModel.saveCustomerUserLocal(customer);
-      return true;
-    } else {
-      return false;
-    }
-  }
-*/
   void _showErrorDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -112,7 +79,7 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
         return AlertDialog(
           title: const Text('Erro de Autenticação'),
           content: const Text(
-              'E-mail ou senha incorretos. Por favor, tente novamente.'),
+              'E-mail incorreto. Por favor, tente novamente.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -125,14 +92,16 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
       },
     );
   }
+
   Future<void> resetPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       // Envio de e-mail bem-sucedido
       print("Um e-mail de redefinição de senha foi enviado para $email");
     } catch (e) {
-      // Manipule erros aqui
-      print("Erro ao enviar o e-mail de redefinição de senha: $e");
+      _showErrorDialog(context);
     }
   }
+
+
 }
