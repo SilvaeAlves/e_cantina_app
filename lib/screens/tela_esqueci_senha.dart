@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:e_cantina_app/config/app_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeForgetPassword extends StatefulWidget {
@@ -68,6 +69,8 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
                         _showErrorDialog(context);
                       }
                     });*/
+
+                    resetPassword(_emailController.text);
                   },
                   child: const Center(child: Text('Redefinir Senha'))),
             ),
@@ -121,5 +124,15 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
         );
       },
     );
+  }
+  Future<void> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      // Envio de e-mail bem-sucedido
+      print("Um e-mail de redefinição de senha foi enviado para $email");
+    } catch (e) {
+      // Manipule erros aqui
+      print("Erro ao enviar o e-mail de redefinição de senha: $e");
+    }
   }
 }
