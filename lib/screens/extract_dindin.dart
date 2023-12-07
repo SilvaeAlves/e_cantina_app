@@ -31,7 +31,7 @@ class _OrderUserScreenState extends State<ExtractDindin> {
             'Extrato Dindin',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: AppConfig.backgroundColor,
+          backgroundColor: AppConfig.backgroundColorStartPage,
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -90,7 +90,8 @@ class _OrderUserScreenState extends State<ExtractDindin> {
                                       backgroundColor: Colors.redAccent),
                                   onPressed: () {},
                                   child: const Center(
-                                      child: Text('CANCELAR COMPRA')),
+                                      child: Text('Cancelar Compra')
+                                  ),
                                 ),
                                 const Divider(
                                   color: Colors.black26,

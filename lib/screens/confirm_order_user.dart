@@ -48,13 +48,13 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
     setTotal(appData.cart);
     return Scaffold(
       bottomNavigationBar: SizedBox(
-        height: 150.0,
+        height: 75.0,
         width: double.infinity,
         child: Column(
           children: [
             SizedBox(
               height: 50.0,
-              width: double.infinity,
+              width: 400.0,
               child: ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
@@ -78,7 +78,7 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
           'Carrinho',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -108,7 +108,7 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 5),
+                                      horizontal: 5, vertical: 5),
                                   child:
                                       SizedBox(width: 120, child: Text(p.name)),
                                 ),
@@ -130,19 +130,19 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
                           ),
                           Text(
                             'Preço Total: R\$${widget.order.total}',
-                            style: const TextStyle(fontSize: 20.0),
+                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
+                          //Text(
+                            //AppData.formatCurrency(total),
+                            //style: const TextStyle(fontSize: 20.0),
+                          //),
                           Text(
-                            AppData.formatCurrency(total),
-                            style: const TextStyle(fontSize: 20.0),
-                          ),
-                          Text(
-                            'Pagamento: ${widget.order.paymentMethod}',
-                            style: const TextStyle(fontSize: 20.0),
+                            'Forma de Pagamento: ${widget.order.paymentMethod}',
+                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'Status: ${widget.order.status}',
-                            style: const TextStyle(fontSize: 20.0),
+                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -169,6 +169,7 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
                     'Número do pedido:\n ${widget.order.numberOrder}',
                     style: const TextStyle(
                         fontSize: 35.0, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

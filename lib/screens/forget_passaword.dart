@@ -1,4 +1,5 @@
 import 'package:e_cantina_app/config/app_config.dart';
+/*
 import 'package:e_cantina_app/screens/tela_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -69,3 +70,4 @@ class ForgetPasswordPage extends StatelessWidget {
         ));
   }
 }
+*/

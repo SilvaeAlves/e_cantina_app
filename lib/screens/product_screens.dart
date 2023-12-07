@@ -26,7 +26,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           'Produtos',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
         actions: [
           Consumer(builder: (context, AppData appData, child) {

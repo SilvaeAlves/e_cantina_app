@@ -17,7 +17,7 @@ class _LoginPasswordState extends State<HomeForgetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),

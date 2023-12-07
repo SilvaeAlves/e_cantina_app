@@ -22,7 +22,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           'User Details',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
       ),
       body: Container(

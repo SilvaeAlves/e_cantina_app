@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),

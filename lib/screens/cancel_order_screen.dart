@@ -43,7 +43,7 @@ class _CancelOrderUserState extends State<CancelOrderUser> {
           children: [
             SizedBox(
               height: 50.0,
-              width: double.infinity,
+              width: 400.0,
               child: ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
@@ -77,7 +77,7 @@ class _CancelOrderUserState extends State<CancelOrderUser> {
           'Cancelar Pedido',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
       ),
       body: SingleChildScrollView(

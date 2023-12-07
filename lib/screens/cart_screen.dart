@@ -47,13 +47,13 @@ class _CartScrenState extends State<CartScren> {
     setTotal(appData.cart);
     return Scaffold(
       bottomNavigationBar: SizedBox(
-        height: 150.0,
+        height: 80.0,
         width: double.infinity,
         child: Column(
           children: [
             SizedBox(
               height: 50.0,
-              width: double.infinity,
+              width: 400.0,
               child: ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
@@ -104,7 +104,7 @@ class _CartScrenState extends State<CartScren> {
           'Carrinho',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: AppConfig.backgroundColor,
+        backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
       ),
       body: SingleChildScrollView(

@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
             'Home',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: AppConfig.backgroundColor,
+          backgroundColor: AppConfig.backgroundColorStartPage,
           centerTitle: true,
           actions: [
             Padding(

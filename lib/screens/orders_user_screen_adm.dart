@@ -31,7 +31,7 @@ class _OrderUserScreenAdmState extends State<OrderUserScreenAdm> {
             'Pedidos',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: AppConfig.backgroundColor,
+          backgroundColor: AppConfig.backgroundColorStartPage,
           centerTitle: true,
         ),
         body: SingleChildScrollView(
