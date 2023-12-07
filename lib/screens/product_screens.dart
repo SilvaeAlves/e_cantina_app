@@ -70,7 +70,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         children: [
           for (var product in appData.products)
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.20,
+              height: MediaQuery.of(context).size.height * 0.25,
               child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

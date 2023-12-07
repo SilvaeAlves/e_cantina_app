@@ -2,6 +2,7 @@ import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/screens/extract_dindin.dart';
 import 'package:e_cantina_app/screens/orders_user_screen.dart';
 import 'package:e_cantina_app/screens/product_screens.dart';
+import 'package:e_cantina_app/screens/start_page.dart';
 import 'package:e_cantina_app/screens/tela_login.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const LoginScreen();
+                    return const Startpage();
                   }));
                 },
               ),

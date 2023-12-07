@@ -1,8 +1,7 @@
 import 'package:e_cantina_app/config/app_config.dart';
 import 'package:e_cantina_app/screens/extract_dindin.dart';
-import 'package:e_cantina_app/screens/orders_user_screen.dart';
 import 'package:e_cantina_app/screens/orders_user_screen_adm.dart';
-import 'package:e_cantina_app/screens/tela_login.dart';
+import 'package:e_cantina_app/screens/start_page.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenAdm extends StatefulWidget {
@@ -34,7 +33,7 @@ class _HomeScreenAdmState extends State<HomeScreenAdm> {
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const LoginScreen();
+                    return const Startpage();
                   }));
                 },
               ),

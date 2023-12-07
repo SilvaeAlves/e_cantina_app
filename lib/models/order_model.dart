@@ -181,7 +181,7 @@ class OrderModel {
     }
   }
 
-  Future<bool> deleteOrder(int id) async {
+  static Future<bool> deleteOrder(int id) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference orders = firestore.collection('orders');
 

@@ -37,92 +37,93 @@ class _LoginScreenState extends State<LoginScreen> {
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                const SizedBox(width: 16.0),
-                const Text(
-                  'Login',
-                  style: TextStyle(fontSize: 33.0),
-                ),
-              ],
-            ),
-            const SizedBox(height: 32.0),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                hintText: 'e_mail',
-                border: OutlineInputBorder(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  const SizedBox(width: 16.0),
+                  const Text(
+                    'Login',
+                    style: TextStyle(fontSize: 33.0),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Senha',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeForgetPassword(),
-                      ),
-                    );
-                  },
-                  child: const Text('Esqueceu a senha? Clique aqui!'),
+              const SizedBox(height: 32.0),
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
+                  hintText: 'e_mail',
+                  border: OutlineInputBorder(),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16.0),
-            Center(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.redAccent),
-                  onPressed: () {
-                    login(_emailController.text, _passwordController.text)
-                        .then((value) {
-                      if (value) {
-                        if (appData.customer.isAdm) {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreenAdm(),
-                            ),
-                          );
+              ),
+              const SizedBox(height: 16.0),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  hintText: 'Senha',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(foregroundColor: Colors.black),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeForgetPassword(),
+                        ),
+                      );
+                    },
+                    child: const Text('Esqueceu a senha? Clique aqui!'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              Center(
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.redAccent),
+                    onPressed: () {
+                      login(_emailController.text, _passwordController.text)
+                          .then((value) {
+                        if (value) {
+                          if (appData.customer.isAdm) {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomeScreenAdm()),
+                                (route) => false);
+                          } else {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()),
+                                (route) => false);
+                          }
                         } else {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                          );
+                          _showErrorDialog(context);
                         }
-                      } else {
-                        _showErrorDialog(context);
-                      }
-                    });
-                  },
-                  child: const Center(child: Text('Login'))),
-            ),
-          ],
+                      });
+                    },
+                    child: const Center(child: Text('Login'))),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -143,8 +144,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<bool> login(String email, String password) async =>
       await appData.login(email, password).then((value) {
         customer = appData.customer;
+
         if (customer.id != 0) {
-          print(customer.toString());
           CustomerModel.saveCustomerUserLocal(customer);
           return true;
         } else {

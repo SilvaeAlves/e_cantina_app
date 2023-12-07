@@ -1,0 +1,30 @@
+{
+    "project_info": {
+      "project_number": "17492933451",
+      "project_id": "ecantina-19638",
+      "storage_bucket": "ecantina-19638.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:17492933451:android:91d74f4321bc48dbd7c6ce",
+          "android_client_info": {
+            "package_name": "com.example.e_cantina_app"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyDDS9D-P0mfhncAgxeze544t_zhzHrAxGU"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
+  

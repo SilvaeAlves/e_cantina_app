@@ -1,4 +1,5 @@
 import 'package:e_cantina_app/config/app_config.dart';
+import 'package:e_cantina_app/models/customer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:e_cantina_app/app_data/app_data.dart';
 import 'package:e_cantina_app/models/order_model.dart';
@@ -13,12 +14,13 @@ class ExtractDindin extends StatefulWidget {
 
 class _OrderUserScreenState extends State<ExtractDindin> {
   List<OrderModel> orders = [];
+  CustomerModel customer = CustomerModel(
+      id: 0, name: '', socialName: '', email: '', password: '', isAdm: false);
 
   @override
   void initState() {
+    getOrders();
     super.initState();
-    final appData = Provider.of<AppData>(context, listen: false);
-    appData.getOrdersByIdUser();
   }
 
   @override
@@ -37,6 +39,11 @@ class _OrderUserScreenState extends State<ExtractDindin> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              Text(
+                'Caixa: R\$ ${appData.caixa.toString()}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -53,8 +60,17 @@ class _OrderUserScreenState extends State<ExtractDindin> {
                                   child: ListTile(
                                     title: Text(
                                         'Extrato do Pedido: ${appData.orders[index].id.toString()}'),
-                                    subtitle: Text(appData.orders[index].idUser
-                                        .toString()),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(appData.orders[index].idUser
+                                            .toString()),
+                                        Text(appData.orders[index].nameUser,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
                                     trailing: Text(
                                         appData.orders[index].total.toString()),
                                   ),
@@ -88,10 +104,15 @@ class _OrderUserScreenState extends State<ExtractDindin> {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.redAccent),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    confirmDeleteOrder(context,
+                                        appData.orders[index].id, appData);
+                                  },
                                   child: const Center(
-                                      child: Text('Cancelar Compra')
-                                  ),
+                                      child: Text(
+                                    'Cancelar Compra',
+                                    style: TextStyle(color: Colors.white),
+                                  )),
                                 ),
                                 const Divider(
                                   color: Colors.black26,
@@ -110,5 +131,44 @@ class _OrderUserScreenState extends State<ExtractDindin> {
             ],
           ),
         ));
+  }
+
+  Future<void> getOrders() async {
+    await CustomerModel.getCustomerUserLocal().then((value) {
+      customer = value;
+      if (customer.isAdm == true) {
+        OrderModel.getOrdersByIdStablishment(1);
+      } else {
+        OrderModel.getOrdersByIdUser(customer.id);
+      }
+    });
+  }
+
+  void confirmDeleteOrder(BuildContext context, int id, AppData appData) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Cancelar Pedido'),
+          content: const Text('Certeza que deseja excluir pedido'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Não'),
+            ),
+            TextButton(
+              onPressed: () {
+                OrderModel.deleteOrder(id);
+                Navigator.of(context).pop();
+                appData.getOrderByIdEstablishment(1);
+              },
+              child: const Text('Sim'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -92,6 +92,9 @@ class AppData extends ChangeNotifier {
 
   List<ProductModel> cart = [];
 
+  int caixa = 0;
+  int aReceber = 0;
+
   CustomerModel customer = CustomerModel(
     id: 0,
     name: '',
@@ -134,6 +137,7 @@ class AppData extends ChangeNotifier {
   void clearCart() {
     cart = [];
     cart.clear();
+
     notifyListeners();
   }
 
@@ -201,14 +205,38 @@ class AppData extends ChangeNotifier {
   }
 
   void getOrdersByIdUser() async {
+    caixa = 0;
     CustomerModel customer = await CustomerModel.getCustomerUserLocal();
     int idUser = customer.id;
     orders = await OrderModel.getOrdersByIdUser(idUser);
+    for (var order in orders) {
+      if (order.isPago == true) {
+        caixa += order.total.toInt();
+      } else {
+        aReceber += order.total.toInt();
+      }
+    }
+    notifyListeners();
+  }
+
+  void calculecaixa() {
+    caixa = 0;
+    for (var order in orders) {
+      if (order.isPago == true) {
+        caixa += order.total.toInt();
+      } else {
+        aReceber += order.total.toInt();
+      }
+    }
     notifyListeners();
   }
 
   void getOrderByIdEstablishment(int idEstablishment) async {
     orders = await OrderModel.getOrdersByIdStablishment(idEstablishment);
+    caixa = 0;
+    for (var element in orders) {
+      caixa += element.total.toInt();
+    }
     notifyListeners();
   }
 

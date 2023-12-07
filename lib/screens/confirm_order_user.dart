@@ -5,6 +5,7 @@ import 'package:e_cantina_app/models/order_model.dart';
 import 'package:e_cantina_app/models/product_model.dart';
 import 'package:e_cantina_app/screens/cancel_order_screen.dart';
 import 'package:e_cantina_app/screens/credicard_screen.dart';
+import 'package:e_cantina_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -80,6 +81,21 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
         ),
         backgroundColor: AppConfig.backgroundColorStartPage,
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                appData.cart.clear();
+                appData.clearQuantity();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false);
+              },
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.white,
+              ))
+        ],
       ),
       body: SingleChildScrollView(
           child: Padding(
@@ -130,19 +146,22 @@ class _ConfirmOrderUserState extends State<ConfirmOrderUser> {
                           ),
                           Text(
                             'Preço Total: R\$${widget.order.total}',
-                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                           //Text(
-                            //AppData.formatCurrency(total),
-                            //style: const TextStyle(fontSize: 20.0),
+                          //AppData.formatCurrency(total),
+                          //style: const TextStyle(fontSize: 20.0),
                           //),
                           Text(
                             'Forma de Pagamento: ${widget.order.paymentMethod}',
-                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'Status: ${widget.order.status}',
-                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
